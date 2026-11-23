@@ -13,7 +13,7 @@ State time_integration(const std::function<State(const Rhs&, double, const State
 	double h = (t1 - t0)/n;
 	double t = t0;
 	State y = y0;
-	for (std::size_t i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i) {
 		t += h;
 		State y_new = method(f, t, y, h);
 		y = y_new;
