@@ -22,8 +22,8 @@ State time_integration(const Method& method, const Rhs& f, const State& y0, doub
 	double t = t0;
 	State y = y0;
 	for (int i = 0; i < n; ++i) {
-		t += h;
 		y = method(f, t, y, h);
+		t += h;
     }
 	return y;
 }
