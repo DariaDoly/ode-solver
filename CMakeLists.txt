@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(ode_lesson CXX)
+add_compile_options(-Wall -Wextra)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,4 +19,3 @@ target_link_libraries(output PUBLIC numerics)
 
 add_executable(main main.cpp)
 target_link_libraries(main PRIVATE numerics output)
-target_compile_options(main PRIVATE -Wall -Wextra)

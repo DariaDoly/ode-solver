@@ -23,11 +23,9 @@ State rhs_cos(double t, const State&){
 
 State kepler(double, const State& y){
 	State rhs_v = Eigen::VectorXd::Zero(y.size());
-	double abs_r = std::sqrt(y(0)*y(0)+y(1)*y(1));
-	rhs_v(0) = y(2);
-	rhs_v(1) = y(3);
-	rhs_v(2) = -y(0)/abs_r/abs_r/abs_r;
-	rhs_v(3) = -y(1)/abs_r/abs_r/abs_r;
+	Eigen::Vector2d r = y.head(2);
+    double r3 = std::pow(r.norm(), 3);
+    rhs_v << y.tail(2), -r / r3;
 	return rhs_v;
 }
 
@@ -60,6 +58,7 @@ void convergence_table(const Rhs& f, const State& y0,
 }
 
 int main() {
+	std::cout << std::setprecision(10);
 	
 /* 	double t0 = 0.0;
 	double t1 = 10.0;
@@ -94,6 +93,21 @@ int main() {
 	
 	write_csv(filename_euler, t0, h, traj_euler, header);
 	write_csv(filename_rk4, t0, h, traj_rk4, header);
+	
+	double r_euler = traj_euler[traj_euler.size()-1].head(2).norm();
+	double r_rk4 = traj_rk4[traj_rk4.size()-1].head(2).norm();
+	
+	double v_euler = traj_euler[traj_euler.size()-1].tail(2).norm();
+	double v_rk4 = traj_rk4[traj_rk4.size()-1].tail(2).norm();
+	
+	double E_euler = std::pow(v_euler, 2)/2 - 1/r_euler;
+	double E_rk4 = std::pow(v_rk4, 2)/2 - 1/r_rk4;
+	
+	std::cout << "Euler, r(20pi) = " << r_euler << "\n";
+	std::cout << "RK4, r(20pi) = " << r_rk4 << "\n";
+	
+	std::cout << "Euler, E(20pi) = " << E_euler << "\n";
+	std::cout << "RK4, E(20pi) = " << E_rk4 << "\n";
 
     return 0;
 }
