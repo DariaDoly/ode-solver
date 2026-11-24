@@ -15,7 +15,7 @@ add_library(numerics ode.cpp)
 target_link_libraries(numerics PUBLIC Eigen3::Eigen)
 
 add_library(output io.cpp)
-target_link_libraries(output PUBLIC numerics)
+target_link_libraries(output PUBLIC Eigen3::Eigen)
 
 add_executable(main main.cpp)
 target_link_libraries(main PRIVATE numerics output)
