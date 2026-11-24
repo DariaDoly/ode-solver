@@ -17,7 +17,7 @@ State rk4_step(const Rhs& f, double t, const State& y, double h){
 }
 
 State time_integration(const Method& method, const Rhs& f, const State& y0, double t0, double t1, int n){
-	State last = Eigen::VectorXd::Zero(y0.size());
+	State last = y0;
 	integrate(method, f, y0, t0, t1, n, [&last](double, const State& s) {last = s; });
 	return last;
 }

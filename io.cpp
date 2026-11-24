@@ -4,14 +4,13 @@
 #include <iomanip>
 #include <iostream>
 
-#include "ode.h"
 #include "io.h"
 
 void write_csv(const std::string& filename, double t0, double h,
                const std::vector<State>& traj, const std::string& header){
     std::ofstream out(filename);
     if (!out) {
-        std::cerr << "cannot open" << filename << "\n";
+        std::cerr << "cannot open " << filename << "\n";
         return;
     }
 	out << std::setprecision(10);
