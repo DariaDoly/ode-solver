@@ -1,5 +1,6 @@
 #include <Eigen/Dense>
 #include <functional>
+#include <vector>
 
 #include "ode.h"
 
@@ -26,4 +27,20 @@ State time_integration(const Method& method, const Rhs& f, const State& y0, doub
 		t += h;
     }
 	return y;
+}
+
+std::vector<State> trajectory(const Method& method, const Rhs& f,
+                              const State& y0, double t0, double t1, int n){
+	double h = (t1 - t0)/n;
+	double t = t0;
+	State y = y0;
+	std::vector<State> traj;
+	traj.reserve(n + 1);
+	traj.push_back(y0);
+	for (int i = 0; i < n; ++i) {
+		y = method(f, t, y, h);
+		t += h;
+		traj.push_back(y);
+    }
+	return traj;
 }

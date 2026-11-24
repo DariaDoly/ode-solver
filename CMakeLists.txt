@@ -13,6 +13,9 @@ find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 add_library(numerics ode.cpp)
 target_link_libraries(numerics PUBLIC Eigen3::Eigen)
 
+add_library(output io.cpp)
+target_link_libraries(output PUBLIC numerics)
+
 add_executable(main main.cpp)
-target_link_libraries(main PRIVATE numerics)
+target_link_libraries(main PRIVATE numerics output)
 target_compile_options(main PRIVATE -Wall -Wextra)
